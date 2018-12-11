@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"/>
+    <!-- google material icons -->
+    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>-->
+    <!-- custom styles -->
+    <link th:href="@{/css/styles.css}" href="styles.css" rel="stylesheet"/>
+
+    <title>SearchLog</title>
+</head>
+<body>
+
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" th:href="@{/}"><b>SearchL<i class="fas fa-search"></i>g</b></a>
+    <!--<a class="navbar-brand col-sm-3 col-md-2 mr-0" th:href="@{/}"><i class="material-icons">find_in_page</i> SearchLog</a>-->
+    <input class="form-control form-control-dark w-80" type="text" placeholder="Search" th:value="${search != null} ? ${search}" aria-label="Search" id="search" onkeypress="handle(event)">
+</nav>
+
+<div class="container-fluid">
+
+    <div class="row p-3"> <!-- main row -->
+        <!--<div class="col-md-2">-->
+            <!--<div class="col-12 p-3 panel" th:inline="text">logfile [[${logfile}]] with [[${#numbers.formatInteger(totallinecount,1,'POINT')}]] lines</div>-->
+        <!--</div>-->
+
+        <!-- sidebar -->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><p></p></li>
+                    <li class="nav-item">
+                        <!--<a class="nav-link" href="#">-->
+                            <div class="nav-link" th:inline="text">logfile [[${logfile}]] with [[${#numbers.formatInteger(totallinecount,1,'POINT')}]] lines</div>
+                        <!--</a>-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                            Orders
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </nav>
+        <!-- sidebar end-->
+
+        <!-- main content -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h2>Logfile contents</h2>
+            </div>
+
+            <nav aria-label="Page navigation example">
+                <ul th:if="${pageCount > 1}" class="pagination">
+                    <li th:class="${pageNumber==currentPage} ? 'page-item disabled' : 'page-item'" th:each="pageNumber : ${pageNumbers}"><a th:href="@{/(size=${size}, page=${pageNumber}, logfile=${logfile}, search=${search})}"
+                    th:text=${pageNumber} th:class="page-link"></a></li>
+                </ul>
+            </nav>
+
+            <div data-th-unless="${#lists.isEmpty(loglines)}" >
+                <pre class="logcontent clickable" th:utext="${#strings.listJoin(loglines,'&lt;br&gt;')}">logfile contents with very loooooooooooooooooooooooooong lines, really looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong linesssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</pre><br>
+            </div>
+
+        </main>
+
+    </div> <!-- main row -->
+
+</div> <!-- container -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script data-th-src="@{/js/purl.js}"></script>
+    <script data-th-src="@{/js/search.js}"></script>
+    <script data-th-src="@{/js/clickable.js}"></script>
+</body>
+</html>
