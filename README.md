@@ -4,10 +4,11 @@ Show and search your logfiles. If you have (application) logfiles on your server
 ## Features
 SearchLog is a small Java web application that will take a logfile path and show the contents in your browser. It is heavily based on the idea of a very nice looking tool [LogHappens](https://loghappens.com/).
 
-* Set the logfile by adding the query parameter `logfile=/var/log/myapplication.log`
+* Set the logfile by adding the query parameter `logfile=/var/log/myapplication.log`.
 * Using pagination SearchLog will not hog down your browser when handling large files.
 * It has a search box but easiest is to `Alt-click` a word in the log contents to quickly search for that word. This could be a sessionid for example or some other distinct word.
-* All features are available as query parameters
+* All features are available as query parameters.
+* Handles any text based logfile format as it does not try to parse anything.
 
 ## Query parameters
 
